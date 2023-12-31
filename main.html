@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <script src="./engine/viz_engine.js"></script>
+
+        <script>
+                const json_2023 = 'https://data.lacity.org/resource/2nrs-mtv8.json'
+                const json_former = 'https://data.lacity.org/api/views/63jg-8b9z/rows.json'
+                async function loadJSON(url) {
+                    const response = await fetch(url);
+                    const json = await response.json();
+
+                    return json;
+                }
+
+                const data_2023 = loadJSON(json_2023);
+        </script>
+    </head>
+    <body></body>
+    </body>
+</html>
