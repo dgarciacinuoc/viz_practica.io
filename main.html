@@ -18,11 +18,20 @@
                              buffer = data;
                         })
                     for(let i=0; i < buffer.length; i++){
-                        json.push(buffer[i])
+                        json.push([
+                            buffer[i].area,
+                            buffer[i].crm_cd,
+                            buffer[i].date_occ.substr(0,10),
+                            buffer[i].time_occ,
+                            buffer[i].vict_age,
+                            buffer[i].vict_descent,
+                            buffer[i].vict_sex,
+                            buffer[i].weapon_used_cd
+                        ])
                     }   
                 }
                 
-                loadJSON(json_2023);
+                loadJSON(json_2023, 10000, 650000);
         </script>
     </head>
     <body>
