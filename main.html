@@ -6,8 +6,11 @@
                 const json_2023 = 'https://data.lacity.org/resource/2nrs-mtv8.json'
                 const json_former = 'https://data.lacity.org/api/views/63jg-8b9z/rows.json'
                 let json = [];
-                async function loadJSON(url) {
+                async function loadJSON(url, limit, offset) {
                     let buffer;
+                    offset = offset || 0;
+                    limit = limit || 10000;
+                    url = url + '?$limit=' + limit + '&$offset=' + offset;
                     const response = await fetch(url)
                         .then(response => response.json())
                         .then(data => {
@@ -17,7 +20,7 @@
                         json.push(buffer[i])
                     }   
                 }
-
+                
                 loadJSON(json_2023);
         </script>
     </head>

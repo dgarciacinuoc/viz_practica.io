@@ -31,3 +31,9 @@ function return_board(){
         return board;
     }
 }
+
+function print_neighborhoods(){
+    for(let i=0; i < json.length; i++){
+        console.log(json[i].area_name)
+    }
+}
