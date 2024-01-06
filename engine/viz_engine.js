@@ -57,8 +57,23 @@ class Graph{
         return '<svg id="' + this.get_div_id() + '" xmlns="http://www.w3.org/2000/svg" ' + this.get_view_box() + '>';
     }
 
+    /**
+     * 
+     * @returns end tad of a svg
+     */
     get_svg_end_tag(){
-        return '</svg>';
+        let end_tag = '</svg>'
+        return end_tag;
+    }
+
+    /**
+     *  @returns svg area
+     */
+    get_area(){
+        let width = this.viewboox_width - (this.margin_left + this.margin_right);
+        let height = this.viewboox_height - (this.margin_top + this.margin_left);
+
+        return width * height;
     }
 
 }
@@ -198,11 +213,40 @@ class TreeMap extends Graph{
         super(id);
         this.items = items;
         this.values = values;
+
+        this.sum = this.get_values_sum();
+        this.areas = this.get_areas();
     }
 
-    get_area(){
-        
+    /**
+     * 
+     * @returns the total sum of values
+     */
+    get_values_sum(){
+        let sum = 0;
+        for(let i=0; i < this.values.length; i++){
+            sum += parseInt(this.values[i]);
+        }
+        return sum;
     }
+
+    /**
+     * 
+     * @returns an array with the area must have each item
+     */
+    get_areas(){
+        let areas = [];
+
+        for(let i=0; i < this.values.length; i++){
+            areas.push(
+                this.values[i] * this.get_area() / this.sum
+            )
+        }
+
+        return areas;
+    }
+
+
 }
 
 /**
