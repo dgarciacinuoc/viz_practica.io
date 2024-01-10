@@ -67,14 +67,38 @@ class Graph{
     }
 
     /**
+     *  @returns svg width
+     */
+    get_width(){
+        return this.viewboox_width - (this.margin_left + this.margin_right);
+    }
+    /**
+     *  @returns svg height
+     */
+    get_height(){
+        return this.viewboox_height - (this.margin_top + this.margin_left);
+    }
+    /**
      *  @returns svg area
      */
     get_area(){
-        let width = this.viewboox_width - (this.margin_left + this.margin_right);
-        let height = this.viewboox_height - (this.margin_top + this.margin_left);
-
-        return width * height;
+        return this.get_width() * this.get_height();
     }
+
+    /**
+     * 
+     * @param {int} x 
+     * @param {int} y
+     * @param {int} r
+     * @param {number} size 
+     * @param {string} css_class
+     * 
+     * @returns string with svg to draw a rect for waffle 
+     */
+        rect_svg(x, y, size, css_class, r=0){
+            return '<rect class="' + css_class + '" x="' + x + '" y="' + y +'" width="' + size +'" height="' + size +'" rx="1" ry="1" />'
+        }
+
 
 }
 
@@ -123,18 +147,15 @@ class WaffleChart extends Graph{
         let size = this.get_rect_size(this.get_chart_size())
 
         for(let i=0; i < this.get_squares(); i++){
-            let class_style = null;
-            if( i < this.get_highlighted_squares){
-                class_style = 'main';
-            }else{
+            let class_style = 'main';
+            if( this.is_highlighted(i)){
                 class_style = 'highlighted';
             }
             html += this.rect_svg(
                 this.get_rect_x(i,size), this.get_rect_y(i, size),
-                size, class_style
+                size, class_style, r = 10
             )
         }
-
         return html + this.get_svg_end_tag();
     }
 
@@ -144,14 +165,10 @@ class WaffleChart extends Graph{
      * @returns size that must have the chart to center it
      */
     get_chart_size(){
-        let chart_width = this.viewboox_width - (this.margin_left + this.margin_right);
-        let chart_height = this.viewboox_height - (this.margin_botton + this.margin_top);
-
-        if(chart_width >= chart_height){
-            return chart_height;
+        if(this.get_width() >= this.get_height()){
+            return this.get_height();
         }
-
-        return chart_width;
+        return this.get_width();
     }
 
     /**
@@ -187,21 +204,74 @@ class WaffleChart extends Graph{
         if(Math.floor(i / this.rows) == 0){
             return this.margin_top;
         } else {
-            return this.margin_top + Math.floor(i / this.rows) * size + this.rects_margins;
+            return parseFloat(this.margin_top + Math.floor(i / this.rows) * size + this.rects_margin);
         }
     }
 
     /**
      * 
-     * @param {int} x 
-     * @param {int} y 
-     * @param {number} size 
-     * @param {string} css_class
-     * 
-     * @returns string with svg to draw a rect for waffle 
+     * @param {int} i element in the waffle chart
+     * @return boolean whether it must or not be highlighted
      */
-    rect_svg(x, y, size, css_class){
-        return '<rect class="' + css_class + '" x="' + x + '" y="' + y +'" width="' + size +'" height="' + size +'" rx="1" ry="1" />'
+    is_highlighted(i){
+        if( i <= this.get_highlighted_squares()){return true};
+        return false;
+    }
+}
+
+/***
+ * Defines a unit formed by a key and a value
+ */
+class KeyValue{
+    constructor(key, value){
+        this.key = key;
+        this.value = value;
+        this.are = null;
+    }
+}
+
+class KeyValueArray{
+    constructor(){
+        this.list = []
+    }
+    push(keyvalue){
+        this.list.push(keyvalue);
+    }
+    sort(){
+        for (let i = 0; i < this.list.length; i++) {
+            for (let j = 0; j < this.list.length - i - 1; j++) {
+              if (this.list[j].value > this.list[j + 1].value) {
+                const lesser = this.list[j + 1];
+                this.list[j + 1] = this.list[j];
+                this.list[j] = lesser;
+              }
+            }
+        }
+    }
+
+    reverse(){
+        let list_ = [];
+        for(let i = this.list.length - 1; i <= 0; i--){
+            list_.push(this.list[i]);
+        }
+        this.list = list_;
+    }
+
+    reverse_sort(){
+        this.sort();
+        this.reverse();
+    }
+
+    /**
+     * 
+     * @returns the total sum of values
+     */
+    get_sum(){
+        let sum = 0;
+        for(let i=0; i < this.values.length; i++){
+            sum += parseInt(this.list[i].value);
+        }
+        return sum;
     }
 }
 
@@ -209,44 +279,29 @@ class WaffleChart extends Graph{
  * 
  */
 class TreeMap extends Graph{
-    constructor(id, items, values){
+    constructor(id, keyvaluearray){
         super(id);
-        this.items = items;
-        this.values = values;
+        this.list = keyvaluearray;
 
-        this.sum = this.get_values_sum();
-        this.areas = this.get_areas();
-    }
-
-    /**
-     * 
-     * @returns the total sum of values
-     */
-    get_values_sum(){
-        let sum = 0;
-        for(let i=0; i < this.values.length; i++){
-            sum += parseInt(this.values[i]);
-        }
-        return sum;
+        this.update_areas();
     }
 
     /**
      * 
      * @returns an array with the area must have each item
      */
-    get_areas(){
-        let areas = [];
-
-        for(let i=0; i < this.values.length; i++){
-            areas.push(
-                this.values[i] * this.get_area() / this.sum
-            )
+    update_areas(){
+        for(let i=0; i < this.list.length; i++){
+            this.list[i].area = this.list[i].value * this.get_area() / this.list.get_sum();
         }
-
-        return areas;
     }
 
-
+    get_html(){
+        this.list.reverse_sort();
+        let big_area1 = this.get_areas()[0];
+        let big_area2 = this.get_areas()[1] + his.get_areas()[2];
+        let big_area3 = this.get_area() - (big_area1 + big_area2);
+    }
 }
 
 /**
