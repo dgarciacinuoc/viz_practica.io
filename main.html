@@ -36,8 +36,16 @@
     </head>
     <body>
         <script>
-            let t = new WaffleChart('d', 2, 5);
+            /*** TESTS **/
+            let w = new WaffleChart('w', 2, 5);
+
+            let l = new KeyValueArray();
+            l.push(new KeyValue('d', 3));
+            l.push(new KeyValue('t', 6));
+            l.push(new KeyValue('w', 0));
             
+            let t = new TreeMap('t', l);
+
         </script>
     </body>
     </body>

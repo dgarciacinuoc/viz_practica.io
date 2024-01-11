@@ -30,7 +30,6 @@ class Graph{
 
         this.viewboox_width = 800;
         this.viewboox_height = 800;
-
     }
     /**
      * 
@@ -226,7 +225,7 @@ class KeyValue{
     constructor(key, value){
         this.key = key;
         this.value = value;
-        this.are = null;
+        this.area = null;
     }
 }
 
@@ -268,10 +267,21 @@ class KeyValueArray{
      */
     get_sum(){
         let sum = 0;
-        for(let i=0; i < this.values.length; i++){
+        for(let i=0; i < this.list.length; i++){
             sum += parseInt(this.list[i].value);
         }
         return sum;
+    }
+
+    length(){
+        return this.list.length;
+    }
+
+    set_area(i, area){
+        this.list[i].area = area;
+    }
+    get_value(i){
+        return this.list[i].value;
     }
 }
 
@@ -291,13 +301,16 @@ class TreeMap extends Graph{
      * @returns an array with the area must have each item
      */
     update_areas(){
-        for(let i=0; i < this.list.length; i++){
-            this.list[i].area = this.list[i].value * this.get_area() / this.list.get_sum();
+        for(let i=0; i < this.list.length(); i++){
+            this.list.set_area(
+                i, this.list.get_value(i) * this.get_area() / this.list.get_sum()
+            );
         }
     }
 
     get_html(){
         this.list.reverse_sort();
+
         let big_area1 = this.get_areas()[0];
         let big_area2 = this.get_areas()[1] + his.get_areas()[2];
         let big_area3 = this.get_area() - (big_area1 + big_area2);
