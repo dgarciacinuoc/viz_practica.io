@@ -266,3 +266,27 @@ let weapon_code_dic = {
     516: [5, 'DOG/ANIMAL (SIC ANIMAL ON)']
 
 }
+
+let area_dic = {
+    1: "CENTRAL AREA",
+    2: "RAMPART AREA",
+    3: "SOUTHWEST AREA",
+    4: "HOLLEBECK AREA",
+    5: "HARBOR AREA",
+    6: "HOLLYWOOD AREA",
+    7: "WILSHIRE AREA",
+    8: "WEST LOS ANGELES AREA",
+    9: "VAN NUYS AREA",
+    10: "WEST VALLEY AREA",
+    11: "NORTHEAST AREA",
+    12: "77TH ST AREA",
+    13: "NEWTON AREA",
+    14: "PACIFIC AREA",
+    15: "NORTH HOLLYWOOD AREA",
+    16: "FOOTHILL AREA",
+    17: "DEVONSHIRE AREA",
+    18: "SOUTHEAST AREA",
+    19: "MISSION AREA",
+    20: "OLYMPIC AREA",
+    21: "TOPANGA AREA"
+}

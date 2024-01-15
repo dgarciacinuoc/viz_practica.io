@@ -5,15 +5,29 @@
  * view
  */
 class Slide{
-    constructor(html){
-        this.html = html || null;
+    constructor(html, div_id){
+        this.html = html;
+        this.div_id = div_id;
     }
     /**
      *  Display the html
      */
-    play(){
-        return_board().innerHTML = this.html;
+    upload(){
+        return_board().innerHTML += this.html;
+        this.update_style();
     }
+    update_style(){
+        document.getElementById(this.div_id).style.position = 'fixed';
+        document.getElementById(this.div_id).style.marginLeft = 'auto';
+
+    }
+    play(){
+        document.getElementById(this.div_id).style.marginTop = 'auto';
+    }
+    remove(){
+        document.getElementById(this.div_id).style.marginTop = '1000%';
+    }
+
 }
 
 /**
@@ -47,13 +61,21 @@ class Graph{
         return 'viewBox="0 0 ' + this.viewboox_width + ' ' + this.viewboox_height +'"';
     }
 
+    set_view_box_width(width){
+        this.viewboox_width = width;
+    }
+
+    set_view_box_height(height){
+        this.viewboox_height = height;
+    }
+
     /** 
      * @param {int} width  widht of viewbox
      * @param {int} height height of viewbox
      * @returns the initial start tag of the svg graph
      */
     get_svg_start_tag(){
-        return '<svg id="' + this.get_div_id() + '" xmlns="http://www.w3.org/2000/svg" ' + this.get_view_box() + '>';
+        return '<svg id="' + this.get_div_id() + '" width="100%" height="95%" xmlns="http://www.w3.org/2000/svg" ' + this.get_view_box() + '>';
     }
 
     /**
@@ -458,8 +480,11 @@ class IconGraph extends Graph{
         this.labels = labels;
         this.values = values;
 
+        this.proportions = [];
+
         this.graph_values = [];
-        this.update_graph_values()
+        this.update_graph_values();
+        this.update_proportions();
     }
     sort(){
         sort_parallel_lists(this.values, this.labels);
@@ -502,12 +527,31 @@ class IconGraph extends Graph{
         }
     }
 
-    draw_html(){
+    update_proportions(){
+        let big = this.graph_values[0][1];
+        if(this.graph_values[3][1] > big){
+            big = this.graph_values[3];
+        }
+        for(let i = 0; i < this.graph_values.length; i++){
+            this.proportions.push(
+                this.graph_values[i][1] / big
+            )
+        }
+    }
 
+    get_html(viewboox_width = 800, viewboox_height=800){
+        return this.get_svg_start_tag() + this.get_html_icons() + this.get_svg_end_tag();
+    }
+
+    get_html_icons(){
+        let html = '';
+        for(let i = 0; i < this.proportions.length; i++){
+            
+        }
     }
 }
 
-class Icon{
+class SVG{
     constructor(svg_code){
         this.svg_code = svg_code;
 
@@ -515,6 +559,10 @@ class Icon{
         this.viewboox_height = null;
 
         this.obtain_viewbox_values();
+    }
+
+    get_svg(){
+        return this.svg_code;
     }
 
     obtain_viewbox_values(){
@@ -537,6 +585,117 @@ class Icon{
         this.viexbox_height = parseFloat(values[3]);
     }
 
+    add_svg_scale(scale_width, scale_height){
+
+        const scale_text = 'transform="scale(' + scale_width + ' '+ scale_height + ')" ';
+
+        const close_viebox = this.viewboox_height + '"';
+        const close_viebox_index = this.svg_code.indexOf(close_viebox) + close_viebox.length + 1;
+
+        this.svg_code = add_text_index(this.svg_code, scale_text, close_viebox_index)
+    }
+}
+
+class Icon extends SVG{
+    constructor(svg_code){
+        super(svg_code);
+
+        this.viexbox_width = null;
+        this.viewboox_height = null;
+
+        this.obtain_viewbox_values();
+
+        this.screen_height = 300;
+        this.scale = null;
+    }
+
+    obtain_viewbox_values(){
+        const viewBoxIndex = this.svg_code.indexOf('viewBox');
+
+        const viewBoxSubstring = this.svg_code.substring(viewBoxIndex);
+
+        this.viexbox_width = viewBoxSubstring;
+
+        const firstOpenComas = viewBoxSubstring.indexOf('"');
+        const firstCloseComas = viewBoxSubstring.indexOf('"', firstOpenComas + 1);
+
+        const viewBoxValuesSubstring = viewBoxSubstring.substring(firstOpenComas + 1, firstCloseComas);
+
+
+
+        const values = viewBoxValuesSubstring.split(' ')
+
+        this.viexbox_width = parseFloat(values[2]);
+        this.viexbox_height = parseFloat(values[3]);
+    }
+
+    set_scale(){
+        this.scale = this.screen_height / this.viewboox_height;
+    }
+
+
+
+    add_svg_translate(translate){
+        const translate_text = ', translate(' + translate + ' 0)"'
+
+        const close_scale = ')"';
+        const close_translate_index = viewBoxSubstring.indexOf(close_viebox) + close_viebox.length + 1;
+
+    }
+}
+
+class DotMap extends Graph{
+    constructor(id, map, tags, codes, values){
+        super(id);
+        this.map = map;
+        this.tags = tags;
+        this.codes = codes;
+        console.log(values);
+        this.values = values;
+    }
+
+    set_values(values){
+        this.values = values;
+    }
+
+    update_circles(){
+        let list = [];
+
+        for(let i = 0; i < this.values.length; i++){
+            list.push(parseInt(this.values[i]))
+        }
+    
+        list.sort();
+
+        const max = list[list.length - 1];
+
+        list = [];
+
+        for(let i = 0; i < this.values.length; i++){
+            let radius = this.values[i] * 40 / max;
+            let id = 'graph_point_' + this.codes[i];
+
+            console.log(radius, id);
+
+            console.log(document.getElementById(id))
+
+            document.getElementById(id).setAttribute('r', radius);
+        }
+    }
+
+    get_html(viewboox_width = 800, viewboox_height=800){
+        return this.get_svg_start_tag() + this.map.get_svg() + this.get_svg_end_tag();
+    }
+}
+
+class Map extends SVG{
+    constructor(svg_code){
+        super(svg_code);
+    }
+}
+
+function add_text_index(txt, addition, i){
+    return txt.slice(0, i) + addition + txt.slice(i);
 }
 
 function sort_parallel_lists(list1, list2){
@@ -568,4 +727,28 @@ function return_board(){
 
         return board;
     }
+}
+
+function getObjectKeys(myObject) {
+    const keysArray = [];
+
+    for (const key in myObject) {
+        if (myObject.hasOwnProperty(key)) {
+            keysArray.push(key);
+        }
+    }
+
+    return keysArray;
+}
+
+function getObjectValues(myObject){
+    const valuesArray = [];
+
+    for (const key in myObject) {
+        if (myObject.hasOwnProperty(key)) {
+            valuesArray.push(myObject[key]);
+        }
+    }
+
+    return valuesArray;
 }
