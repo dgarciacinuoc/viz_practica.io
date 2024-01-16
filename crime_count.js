@@ -344,7 +344,6 @@ function count_descendant_per_crime(crime){
         }
     }
 
-    console.log(count)
 
     icon_graph.values = getObjectValues(count);
     icon_graph.labels = getObjectKeys(crime_per_descendent);
@@ -354,4 +353,20 @@ function count_descendant_per_crime(crime){
 
 
     document.getElementById('board').innerHTML = icon_graph.draw_html();
+}
+
+function by_sex(){
+    console.log('inici');
+    let males = 0;
+    let females = 0;
+    for(let i=0; i < json.length; i++){
+        if(json[i][6] == 'M'){
+            males ++;
+        }
+        if(json[i][6] == 'F'){
+            females ++;
+        }
+    }
+    let waffle = new WaffleChart('females', females, males+females);
+    document.getElementById('board').innerHTML = waffle.get_html();
 }

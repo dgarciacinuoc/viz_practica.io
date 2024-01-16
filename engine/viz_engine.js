@@ -177,13 +177,26 @@ class WaffleChart extends Graph{
 
     get_html_rects(){
         let html = '';
-        let size = this.get_rect_size(this.get_chart_size())
         for(let i=0; i < this.get_squares(); i++){
-            html += this.rect_svg(
-                this.get_rect_x(i,size), this.get_rect_y(i, size),
-                size, size, this.get_rect_class(), this.r
-                )
+            const size = 20;
+            const x = 200 + 4 * (i % this.rows) + (i % this.rows) * size;
+            const y = 200 + 4 *  (Math.floor(i / this.rows)) + Math.floor(i / this.rows) * size;
+
+            let svg_class = 'waffle_inactive';
+
+
+
+            const threshold = Math.floor((this.cases / this.totalAmount) * 100);
+
+            console.log(i, 100 -threshold,i > (100 -threshold) );
+
+            if( i > (100 -threshold)){svg_class = 'waffle_active' }
+ 
+            html += '<rect class="'+svg_class+'" x="' + x + '" y="' + y + '" width="'+size+'" height="'+size+'" rx="5" ry="5"/>'
         }
+        html += '<text class="waffle_text_inactive" x="200" y="480">Men</text>'
+        html += '<text class="waffle_text_active" x="370" y="480">Women</text>'
+
         return html;
     }
 
@@ -607,10 +620,6 @@ class IconGraph extends Graph{
     draw_html(){
         let html = this.get_svg_start_tag();
 
-
-        console.log(this.values);
-        console.log(this.labels);
-
         let i = 0;
 
         let value_1 = null;
@@ -666,8 +675,6 @@ class IconGraph extends Graph{
                 others += this.values[j];
             }
         }
-
-        console.log(label_1, value_1, label_2, value_2, label_3, value_3, others)
 
         if(others > max ){max = others}
 
@@ -755,6 +762,9 @@ class IconGraph extends Graph{
 
         html += '<rect x="0" y="550" width="140" height="45" class="icon" onclick="count_descendant_per_crime(4)" />';
         html += '<text x="10" y="575" class="text_inbox" onclick="count_descendant_per_crime(4)">Sex crimes</text>';
+
+        html += '<rect x="160" y="550" width="140" height="45" class="icon" onclick="by_sex()" />';
+        html += '<text x="170" y="575" class="text_inbox" onclick="by_sex()">Victims by sex</text>';
 
 
         html += '<text x="0" y="700" class="text"  onclick="main_page()">Back</text>';
