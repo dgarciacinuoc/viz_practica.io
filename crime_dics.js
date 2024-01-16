@@ -150,26 +150,26 @@ let crime_name_assigned_code = {
 }
 
 let descendent_dic = {
-    'A': 'Other Asian',
+    'A': 'Asian',
     'B': 'Black',
     'C': 'Chinese',
-    'D': 'Cambodian',
+    'D': 'Camb.',
     'F': 'Filipino',
-    'G': 'Guamanian',
+    'G': 'Guam.',
     'H': 'Latin',
-    'I': 'American Indian/Alaskan Native',
+    'I': 'Native',
     'J': 'Japanese',
     'K': 'Korean',
     'L': 'Laotian',
     'O': 'Other',
-    'P': 'Pacific Islander',
+    'P': 'Pacific',
     'S': 'Samoan',
     'U': 'Hawaiian',
-    'V': 'Vietnamese',
+    'V': 'Viet.',
     'W': 'White',
     'U': 'Unknown',
     'X': 'Unknown',
-    'Z': 'Asian Indian',
+    'Z': 'Indian',
     'undefined' : 'undefined'
 }
 

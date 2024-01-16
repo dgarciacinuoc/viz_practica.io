@@ -608,6 +608,9 @@ class IconGraph extends Graph{
         let html = this.get_svg_start_tag();
 
 
+        console.log(this.values);
+        console.log(this.labels);
+
         let i = 0;
 
         let value_1 = null;
@@ -663,6 +666,8 @@ class IconGraph extends Graph{
                 others += this.values[j];
             }
         }
+
+        console.log(label_1, value_1, label_2, value_2, label_3, value_3, others)
 
         if(others > max ){max = others}
 
@@ -735,12 +740,24 @@ class IconGraph extends Graph{
         html += '<text x="380" y="380" class="icon_legend">Other</text>'
 
 
-        html += '<rect x="0" y="500" width="100" height="50" class="icon" onclick="'+count_descendant_per_crime(0)+'" />';
+        html += '<rect x="0" y="500" width="90" height="45" class="icon" onclick="count_descendant_per_crime(99)" />';
+        html += '<text x="10" y="525" class="text_inbox" onclick="count_descendant_per_crime(99)">Total</text>';
 
 
+        html += '<rect x="100" y="500" width="110" height="45" class="icon" onclick="count_descendant_per_crime(0)" />';
+        html += '<text x="110" y="525" class="text_inbox" onclick="count_descendant_per_crime(0)">Burglary</text>';
+
+        html += '<rect x="220" y="500" width="80" height="45" class="icon" onclick="count_descendant_per_crime(1)" />';
+        html += '<text x="230" y="525" class="text_inbox" onclick="count_descendant_per_crime(1)">Theft</text>';
+
+        html += '<rect x="310" y="500" width="100" height="45" class="icon" onclick="count_descendant_per_crime(2)" />';
+        html += '<text x="320" y="525" class="text_inbox" onclick="count_descendant_per_crime(2)">Assault</text>';
+
+        html += '<rect x="0" y="550" width="140" height="45" class="icon" onclick="count_descendant_per_crime(4)" />';
+        html += '<text x="10" y="575" class="text_inbox" onclick="count_descendant_per_crime(4)">Sex crimes</text>';
 
 
-        html += '<text x="0" y="600" class="text"  onclick="main_page()">Back</text>';
+        html += '<text x="0" y="700" class="text"  onclick="main_page()">Back</text>';
 
         html += this.get_svg_end_tag();
 

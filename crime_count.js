@@ -318,8 +318,7 @@ function clear_descendant_count(){
 
 function view_victims(){
     icon_graph.values = getObjectValues(count_descendant())
-    icon_graph.update_graph_values();
-    icon_graph.update_proportions();
+
 
     icon_graph.inverse_sort();
 
@@ -330,12 +329,29 @@ function count_descendant_per_crime(crime){
     let count = crime_per_descendent;
 
     clear_descendant_count()
-    for(let i=0; i < json.length; i++){
-        if(crime_name_assigned_code[json[i][1]][0] == crime){
-            count[json[i][5]]++; 
-        }
 
+    if(crime == 99){
+        for(let i=0; i < json.length; i++){
+            count[json[i][5]]++;
+        }
+ 
+    }else{
+        for(let i=0; i < json.length; i++){
+            if(crime_name_assigned_code[json[i][1]][0] == crime){
+                count[json[i][5]]++; 
+            }
+    
+        }
     }
+
     console.log(count)
-    return count;
+
+    icon_graph.values = getObjectValues(count);
+    icon_graph.labels = getObjectKeys(crime_per_descendent);
+
+
+    icon_graph.inverse_sort();
+
+
+    document.getElementById('board').innerHTML = icon_graph.draw_html();
 }
