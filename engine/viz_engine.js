@@ -646,7 +646,7 @@ class IconGraph extends Graph{
         let label_1 = null;
 
         while(!value_1){
-            if(this.labels[i] != 'undefined' && this.labels[i] != 'X' && this.labels[i] != 'U'){
+            if(this.labels[i] != 'undefined' && this.labels[i] != 'X' && this.labels[i] != 'O' && this.labels[i] != 'U'){
                 value_1 = this.values[i];
                 label_1 = this.labels[i]
             }
@@ -660,7 +660,7 @@ class IconGraph extends Graph{
 
 
         while(!value_2){
-           if(this.labels[i] != 'undefined' && this.labels[i] != 'X' && this.labels[i] != 'U'){
+           if(this.labels[i] != 'undefined' && this.labels[i] != 'X' && this.labels[i] != 'O' && this.labels[i] != 'U'){
                 value_2 = this.values[i];
                 label_2 = this.labels[i];
            }
@@ -674,7 +674,7 @@ class IconGraph extends Graph{
         let label_3 = null;
 
         while(!value_3){
-            if(this.labels[i] != 'undefined' && this.labels[i] != 'X' && this.labels[i] != 'U'){
+            if(this.labels[i] != 'undefined' && this.labels[i] != 'X' && this.labels[i] != 'O' && this.labels[i] != 'U'){
                 value_3 = this.values[i];
                 label_3 = this.labels[i];
             }
@@ -785,6 +785,143 @@ class IconGraph extends Graph{
 
         html += '<rect x="160" y="550" width="190" height="45" class="icon" onclick="by_sex()" />';
         html += '<text x="170" y="575" class="text_inbox" onclick="by_sex()">Victims by sex</text>';
+
+
+        html += '<text x="0" y="700" class="text"  onclick="main_page()">< Back</text>';
+
+        html += this.get_svg_end_tag();
+
+        return html;
+
+    }
+    draw_html2(){
+        let html = this.get_svg_start_tag();
+
+        let i = 0;
+
+        let value_1 = null;
+        let label_1 = null;
+
+        while(!value_1){
+            if(this.labels[i] != 'undefined' && this.labels[i] != 'X' && this.labels[i] != 'O' && this.labels[i] != 'U'){
+                value_1 = this.values[i];
+                label_1 = this.labels[i]
+            }
+            i++;
+        }
+
+        let max = value_1;
+
+        let value_2 = null;
+        let label_2 = null;
+
+
+        while(!value_2){
+           if(this.labels[i] != 'undefined' && this.labels[i] != 'X' && this.labels[i] != 'O' && this.labels[i] != 'U'){
+                value_2 = this.values[i];
+                label_2 = this.labels[i];
+           }
+            i++;
+        }
+
+        if(value_2 >value_1){max = value_2}
+
+
+        let value_3 = null;
+        let label_3 = null;
+
+        while(!value_3){
+            if(this.labels[i] != 'undefined' && this.labels[i] != 'X' && this.labels[i] != 'O' && this.labels[i] != 'U'){
+                value_3 = this.values[i];
+                label_3 = this.labels[i];
+            }
+            i++;
+        }
+
+        if(value_3 > max ){max = value_2}
+
+        let others = 0;
+
+        for(let j = 0; j < this.values.length; j++){
+            if(
+                this.labels[j] != 'undefined' &&
+                this.labels[j] != label_1 &&
+                this.labels[j] != label_2 &&
+                this.labels[j] != label_3 
+            ){
+                others += this.values[j];
+            }
+        }
+
+        if(others > max ){max = others}
+
+        const svg_height = 319.567;
+
+        const proportion = 100 / (max * svg_height);
+
+        const height_floor = 250;
+
+        let scale =  proportion * value_1;
+        let height = svg_height * scale;
+
+        let height_transform = height_floor  - height;
+
+
+        let icon_svg = '<g viewBox="0 0 232 613" transform="translate(0 '+height_transform+')"><circle class="icon1" transform="scale('+ scale +' '+ scale +')" cx="117" cy="44" r="44"/><path transform="scale('+ scale +' '+ scale +')" class="icon1" d="M116.41,108.98h67.89c3.54.27,23.19,2.14,36.71,19.02,9.3,11.62,10.71,24.12,11,29v210.87c-1.53,11.09-10.54,19.48-21,20.13-11.72.73-22.66-8.41-24-21,.33-63,.67-126,1-189-.07-3.94-3.31-7.04-7-7-3.37.04-6.36,2.69-6.8,6.25v411.83c-.78,12.33-11.11,21.95-23.2,21.92-11.71-.03-21.77-9.11-23-21-.33-71.67-.67-143.33-1-215-2.36-4.46-7.04-7.19-12-7-4.62.18-8.82,2.86-11,7v215.41c-.3,12.51-10.64,22.59-23,22.59-12.15,0-22.39-9.72-23-22V171.48c-1.1-2.91-3.98-4.74-7-4.48-2.8.24-5.21,2.23-6,5v198.97c-2.87,9.95-11.88,16.87-22,17.03-10.74.17-20.39-7.3-23-18v-218.47c.47-3.84,2.67-17.99,15-29.53,12.12-11.35,26.08-12.74,30-13,23.8,0,47.6-.02,71.41-.02Z"/></g>';
+
+        html += icon_svg;
+
+        html += '<text x="0" y="100" class="icon_legend">' + value_1+ '</text>'
+        html += '<text x="0" y="380" class="icon_legend">' + descendent_dic[label_1]+ '</text>'
+
+        
+
+
+        scale =  proportion * value_2;
+        height = svg_height * scale;
+
+        height_transform = height_floor  - height;
+
+        let transform = 'transform="scale('+ scale +' '+ scale +')"'
+
+        icon_svg = '<g viewBox="0 0 232 613" transform="translate(130 '+height_transform+')" ><circle '+ transform +' class="icon2" cx="117" cy="44" r="44"/><path '+ transform +' class="icon2" d="M116.41,108.98h67.89c3.54.27,23.19,2.14,36.71,19.02,9.3,11.62,10.71,24.12,11,29v210.87c-1.53,11.09-10.54,19.48-21,20.13-11.72.73-22.66-8.41-24-21,.33-63,.67-126,1-189-.07-3.94-3.31-7.04-7-7-3.37.04-6.36,2.69-6.8,6.25v411.83c-.78,12.33-11.11,21.95-23.2,21.92-11.71-.03-21.77-9.11-23-21-.33-71.67-.67-143.33-1-215-2.36-4.46-7.04-7.19-12-7-4.62.18-8.82,2.86-11,7v215.41c-.3,12.51-10.64,22.59-23,22.59-12.15,0-22.39-9.72-23-22V171.48c-1.1-2.91-3.98-4.74-7-4.48-2.8.24-5.21,2.23-6,5v198.97c-2.87,9.95-11.88,16.87-22,17.03-10.74.17-20.39-7.3-23-18v-218.47c.47-3.84,2.67-17.99,15-29.53,12.12-11.35,26.08-12.74,30-13,23.8,0,47.6-.02,71.41-.02Z"/></g>';
+
+        html += icon_svg;
+
+        html += '<text x="120" y="100" class="icon_legend">' + value_2+ '</text>'
+        html += '<text x="120" y="380" class="icon_legend">' + descendent_dic[label_2]+ '</text>'
+
+
+
+        scale =  proportion * value_3;
+        height = svg_height * scale;
+
+        height_transform = height_floor  - height;
+
+        transform = 'transform="scale('+ scale +' '+ scale +')"'
+
+        icon_svg = '<g viewBox="0 0 232 613" transform="translate(260 '+height_transform+')" ><circle '+ transform +' class="icon3" cx="117" cy="44" r="44"/><path '+ transform +' class="icon3" d="M116.41,108.98h67.89c3.54.27,23.19,2.14,36.71,19.02,9.3,11.62,10.71,24.12,11,29v210.87c-1.53,11.09-10.54,19.48-21,20.13-11.72.73-22.66-8.41-24-21,.33-63,.67-126,1-189-.07-3.94-3.31-7.04-7-7-3.37.04-6.36,2.69-6.8,6.25v411.83c-.78,12.33-11.11,21.95-23.2,21.92-11.71-.03-21.77-9.11-23-21-.33-71.67-.67-143.33-1-215-2.36-4.46-7.04-7.19-12-7-4.62.18-8.82,2.86-11,7v215.41c-.3,12.51-10.64,22.59-23,22.59-12.15,0-22.39-9.72-23-22V171.48c-1.1-2.91-3.98-4.74-7-4.48-2.8.24-5.21,2.23-6,5v198.97c-2.87,9.95-11.88,16.87-22,17.03-10.74.17-20.39-7.3-23-18v-218.47c.47-3.84,2.67-17.99,15-29.53,12.12-11.35,26.08-12.74,30-13,23.8,0,47.6-.02,71.41-.02Z"/></g>';
+
+        html += icon_svg;
+
+        html += '<text x="240" y="100" class="icon_legend">' + value_3+ '</text>'
+        html += '<text x="240" y="380" class="icon_legend">' + descendent_dic[label_3]+ '</text>'
+
+
+
+        scale =  proportion * others;
+        height = svg_height * scale;
+
+        height_transform = height_floor  - height;
+
+        transform = 'transform="scale('+ scale +' '+ scale +')"'
+
+        icon_svg = '<g viewBox="0 0 232 613" transform="translate(380 '+height_transform+')" ><circle '+ transform +' class="icon4" cx="117" cy="44" r="44"/><path '+ transform +' class="icon4" d="M116.41,108.98h67.89c3.54.27,23.19,2.14,36.71,19.02,9.3,11.62,10.71,24.12,11,29v210.87c-1.53,11.09-10.54,19.48-21,20.13-11.72.73-22.66-8.41-24-21,.33-63,.67-126,1-189-.07-3.94-3.31-7.04-7-7-3.37.04-6.36,2.69-6.8,6.25v411.83c-.78,12.33-11.11,21.95-23.2,21.92-11.71-.03-21.77-9.11-23-21-.33-71.67-.67-143.33-1-215-2.36-4.46-7.04-7.19-12-7-4.62.18-8.82,2.86-11,7v215.41c-.3,12.51-10.64,22.59-23,22.59-12.15,0-22.39-9.72-23-22V171.48c-1.1-2.91-3.98-4.74-7-4.48-2.8.24-5.21,2.23-6,5v198.97c-2.87,9.95-11.88,16.87-22,17.03-10.74.17-20.39-7.3-23-18v-218.47c.47-3.84,2.67-17.99,15-29.53,12.12-11.35,26.08-12.74,30-13,23.8,0,47.6-.02,71.41-.02Z"/></g>';
+
+        html += icon_svg;
+
+        html += '<text x="380" y="100" class="icon_legend">' +others+ '</text>'
+        html += '<text x="380" y="380" class="icon_legend">Other</text>'
 
 
         html += '<text x="0" y="700" class="text"  onclick="main_page()">< Back</text>';

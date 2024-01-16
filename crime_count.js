@@ -355,6 +355,36 @@ function count_descendant_per_crime(crime){
     document.getElementById('board').innerHTML = icon_graph.draw_html();
 }
 
+function count_descendant_per_area(area){
+    let count = crime_per_descendent;
+
+    clear_descendant_count()
+
+    if(area == 99){
+        for(let i=0; i < json.length; i++){
+            count[json[i][5]]++;
+        }
+ 
+    }else{
+        for(let i=0; i < json.length; i++){
+            if(json[i][0] == area){
+                count[json[i][5]]++; 
+            }
+    
+        }
+    }
+
+
+    icon_graph.values = getObjectValues(count);
+    icon_graph.labels = getObjectKeys(crime_per_descendent);
+
+
+    icon_graph.inverse_sort();
+
+
+    document.getElementById('board').innerHTML = icon_graph.draw_html2();
+}
+
 let waffle = new WaffleChart('females', 0, 0);
 
 function by_sex(){
