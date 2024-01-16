@@ -43,8 +43,10 @@ const la_map_svg = `
                 <circle id="graph_point_5" class="map_point" onclick="draw_tree_map_area(5)" cx="544.85" cy="973.84" r="7.77"/>
                 <circle id="graph_point_13" class="map_point" onclick="draw_tree_map_area(13)" cx="581.52" cy="584.38" r="7.77"/>
 
-                <text class="text" onclick="view_victims()"><tspan x="43.49" y="962.19">Victims stats</tspan></text>
-                <text class="text" transform="translate(36.27 850.92)" onclick="update_crimes()"><tspan x="0" y="0">LA area's crime rate</tspan></text>
+                <rect x="30" y="920" width="320" height="70" class="tree_map_1" onclick="view_victims()" />
+                <text class="text_inbox_big" onclick="view_victims()"><tspan x="43.49" y="962.19">Victims stats</tspan></text>
+                <rect x="30" y="810" width="460" height="70" class="tree_map_1" onclick="view_victims()" />
+                <text class="text_inbox_big" transform="translate(36.27 850.92)" onclick="update_crimes()"><tspan x="0" y="0">LA area's crime rate</tspan></text>
 `
 function update_crimes(){
     la_dotmap.set_values(getObjectValues(count_crimes_area()));

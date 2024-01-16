@@ -355,8 +355,9 @@ function count_descendant_per_crime(crime){
     document.getElementById('board').innerHTML = icon_graph.draw_html();
 }
 
+let waffle = new WaffleChart('females', 0, 0);
+
 function by_sex(){
-    console.log('inici');
     let males = 0;
     let females = 0;
     for(let i=0; i < json.length; i++){
@@ -367,6 +368,35 @@ function by_sex(){
             females ++;
         }
     }
-    let waffle = new WaffleChart('females', females, males+females);
+    waffle.cases = females;
+    waffle.totalAmount = females + males;
+    document.getElementById('board').innerHTML = waffle.get_html();
+}
+
+
+function by_sex_crime(crime){
+    let males = 0;
+    let females = 0;
+    if(crime == 99){
+        for(let i=0; i < json.length; i++){
+            if(json[i][6] == 'M'){
+                males ++;
+            }
+            if(json[i][6] == 'F'){
+                females ++;
+            }
+        } 
+    }else{
+        for(let i=0; i < json.length; i++){
+            if(json[i][6] == 'M' && crime_name_assigned_code[json[i][1]][0] == crime){
+                males ++;
+            }
+            if(json[i][6] == 'F'&& crime_name_assigned_code[json[i][1]][0] == crime){
+                females ++;
+            }
+        }
+    }
+    waffle.cases = females;
+    waffle.totalAmount = females + males;
     document.getElementById('board').innerHTML = waffle.get_html();
 }

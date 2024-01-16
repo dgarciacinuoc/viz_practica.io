@@ -188,14 +188,34 @@ class WaffleChart extends Graph{
 
             const threshold = Math.floor((this.cases / this.totalAmount) * 100);
 
-            console.log(i, 100 -threshold,i > (100 -threshold) );
-
             if( i > (100 -threshold)){svg_class = 'waffle_active' }
  
             html += '<rect class="'+svg_class+'" x="' + x + '" y="' + y + '" width="'+size+'" height="'+size+'" rx="5" ry="5"/>'
         }
-        html += '<text class="waffle_text_inactive" x="200" y="480">Men</text>'
-        html += '<text class="waffle_text_active" x="370" y="480">Women</text>'
+        html += '<text class="waffle_text_inactive" x="200" y="480">Men</text>';
+        html += '<text class="waffle_text_active" x="370" y="480">Women</text>';
+
+        html += '<rect x="150" y="600" width="90" height="45" class="icon" onclick="by_sex_crime(99)" />';
+        html += '<text x="160" y="625" class="text_inbox" onclick="by_sex_crime(99)">Total</text>';
+
+
+        html += '<rect x="250" y="600" width="110" height="45" class="icon" onclick="by_sex_crime(0)" />';
+        html += '<text x="260" y="625" class="text_inbox" onclick="by_sex_crime(0)">Burglary</text>';
+
+        html += '<rect x="370" y="600" width="80" height="45" class="icon" onclick="by_sex_crime(1)" />';
+        html += '<text x="380" y="625" class="text_inbox" onclick="by_sex_crime(1)">Theft</text>';
+
+        html += '<rect x="460" y="600" width="100" height="45" class="icon" onclick="by_sex_crime(2)" />';
+        html += '<text x="475" y="625" class="text_inbox" onclick="by_sex_crime(2)">Assault</text>';
+
+        html += '<rect x="150" y="650" width="140" height="45" class="icon" onclick="by_sex_crime(4)" />';
+        html += '<text x="160" y="675" class="text_inbox" onclick="by_sex_crime(4)">Sex crimes</text>';
+
+        html += '<rect x="300" y="650" width="170" height="45" class="icon" onclick="view_victims()" />';
+        html += '<text x="310" y="675" class="text_inbox" onclick="view_victims()">By Descendent</text>';
+
+
+        html += '<text x="0" y="750" class="text"  onclick="main_page()">< Back</text>';
 
         return html;
     }
@@ -541,7 +561,7 @@ class TreeMap extends Graph{
         html += '<text x="'+ x_text +'" y="45" class="text_inbox" onclick="main_page()">Other: '+ others+'</text>';
 
 
-        html += '<text x="43.49" y="700" class="text" onclick="main_page()">Back</text>';
+        html += '<text x="43.49" y="700" class="text" onclick="main_page()">< Back</text>';
         return html;
     }
 
@@ -758,16 +778,16 @@ class IconGraph extends Graph{
         html += '<text x="230" y="525" class="text_inbox" onclick="count_descendant_per_crime(1)">Theft</text>';
 
         html += '<rect x="310" y="500" width="100" height="45" class="icon" onclick="count_descendant_per_crime(2)" />';
-        html += '<text x="320" y="525" class="text_inbox" onclick="count_descendant_per_crime(2)">Assault</text>';
+        html += '<text x="315" y="525" class="text_inbox" onclick="count_descendant_per_crime(2)">Assault</text>';
 
         html += '<rect x="0" y="550" width="140" height="45" class="icon" onclick="count_descendant_per_crime(4)" />';
         html += '<text x="10" y="575" class="text_inbox" onclick="count_descendant_per_crime(4)">Sex crimes</text>';
 
-        html += '<rect x="160" y="550" width="140" height="45" class="icon" onclick="by_sex()" />';
+        html += '<rect x="160" y="550" width="190" height="45" class="icon" onclick="by_sex()" />';
         html += '<text x="170" y="575" class="text_inbox" onclick="by_sex()">Victims by sex</text>';
 
 
-        html += '<text x="0" y="700" class="text"  onclick="main_page()">Back</text>';
+        html += '<text x="0" y="700" class="text"  onclick="main_page()">< Back</text>';
 
         html += this.get_svg_end_tag();
 
