@@ -233,8 +233,14 @@ const crime_per_descendent = {
     'V': 0,
     'W': 0,
     'U': 0,
-    'Z': 0
+    'X': 0,
+    'Z': 0,
+    'undefined' : 0
 }
+
+let descendent_lables = getObjectKeys(crime_per_descendent);
+
+
 
 const crime_per_sex = {
     'F': 0,
@@ -244,10 +250,17 @@ const crime_per_sex = {
 
 function count_crimes_area(){
     let count = crime_per_area;
+    clear_count_area()
     for(let i=0; i < json.length; i++){
         count[parseInt(json[i][0])]++; 
     }
     return count;
+}
+
+function clear_count_area(){
+    for(let i = 0; i < getObjectKeys(crime_per_area).length; i ++){
+        crime_per_area[getObjectKeys(crime_per_area)[i]] = 0;
+    }
 }
 
 let count = 0;
@@ -284,8 +297,45 @@ function draw_tree_map_area(area){
 
     tree_map_crime_slide.upload();
 
-    console.log(crime_types_tree.get_div_id());
     document.getElementById(crime_types_tree.get_div_id()).innerHTML = crime_types_tree.get_html();
+}
 
+function count_descendant(){
+    let count = crime_per_descendent;
 
+    clear_descendant_count()
+    for(let i=0; i < json.length; i++){
+        count[json[i][5]]++; 
+    }
+    return count;
+}
+
+function clear_descendant_count(){
+    for(let i = 0; i < getObjectKeys(crime_per_descendent).length; i ++){
+        crime_per_descendent[getObjectKeys(crime_per_descendent)[i]] = 0;
+    }
+}
+
+function view_victims(){
+    icon_graph.values = getObjectValues(count_descendant())
+    icon_graph.update_graph_values();
+    icon_graph.update_proportions();
+
+    icon_graph.inverse_sort();
+
+    document.getElementById('board').innerHTML = icon_graph.draw_html();
+}
+
+function count_descendant_per_crime(crime){
+    let count = crime_per_descendent;
+
+    clear_descendant_count()
+    for(let i=0; i < json.length; i++){
+        if(crime_name_assigned_code[json[i][1]][0] == crime){
+            count[json[i][5]]++; 
+        }
+
+    }
+    console.log(count)
+    return count;
 }

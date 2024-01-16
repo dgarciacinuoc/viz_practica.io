@@ -156,7 +156,7 @@ let descendent_dic = {
     'D': 'Cambodian',
     'F': 'Filipino',
     'G': 'Guamanian',
-    'H': 'Hispani/Latin/Mexican',
+    'H': 'Latin',
     'I': 'American Indian/Alaskan Native',
     'J': 'Japanese',
     'K': 'Korean',
@@ -168,7 +168,9 @@ let descendent_dic = {
     'V': 'Vietnamese',
     'W': 'White',
     'U': 'Unknown',
-    'Z': 'Asian Indian'
+    'X': 'Unknown',
+    'Z': 'Asian Indian',
+    'undefined' : 'undefined'
 }
 
 let sex_dic = {
