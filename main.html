@@ -26,6 +26,23 @@
                 font-family: Courier, Courier;
                 font-size: 36px;
             }
+            .text_inbox{
+                fill: var(--color2);
+                font-family: Courier, Courier;
+                font-size: 20px;
+            }
+            .tree_map_1{
+                fill: var(--color4)
+            }
+            .tree_map_2{
+                fill: #4678cf;
+            }
+            .tree_map_3{
+                fill:  #6d8ee2;
+            }
+            .tree_map_4{
+                fill: var(--color3)
+            }
         </style>
 
         <script>
@@ -83,7 +100,12 @@
             let la_map_slide = new Slide(la_dotmap.get_html(), la_dotmap.get_div_id());
             la_map_slide.upload();
 
+            let tree_map_crime_slide = new Slide(crime_types_tree.get_html(), crime_types_tree.get_div_id());
 
+            function main_page(){
+                la_map_slide = new Slide(la_dotmap.get_html(), la_dotmap.get_div_id());
+                la_map_slide.upload();
+            }
         </script>
     </body>
     </body>

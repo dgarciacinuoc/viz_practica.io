@@ -21,27 +21,27 @@ const la_map_svg = `
                 <polygon id="area_5" class="map" points="511.85 907.95 511.85 822.54 533.09 822.54 532.85 806.95 522.85 806.95 522.85 800.26 540.22 793.13 540.22 773.95 522.85 773.95 522.85 787.78 497.85 788.95 497.85 933.96 504.85 945.54 492.85 965.95 497.85 970.95 509.02 970.95 508.85 977.95 496.54 977.95 496.85 997.95 485.85 997.95 485.85 1024.87 477.85 1027.95 470.76 1027.95 463.85 1040.95 518.85 1061.95 517.85 1069.95 528.63 1069.95 533.85 1060.95 540.22 1061.41 558.94 1069.95 609.85 1052.95 587.17 978.52 599.87 975.85 592.85 964.95 625.85 933.96 618.85 921.95 625.85 887.61 618.85 848.39 613.85 858.19 618.85 888.5 607.85 916.95 599.87 901.87 575.85 902.76 575.85 892.06 562.85 890.95 557.85 904.95 511.85 907.95"/>
                 <polygon id="area_11" class="map" points="511.08 309 505.08 321 511.08 331.53 512.48 354.63 511.08 408 527.08 408 527.08 430.95 552.08 431 565.86 445.4 617.08 470.31 636.91 452.64 658.08 440 667.08 416 684.08 410 694.08 396 704.08 396 722.71 368 714.28 368 705.08 374 692.83 358 693.08 347 700.08 344 695.08 336 695.08 329 677.08 328 676.08 320 657.08 331 636.91 327.7 627.08 336.89 632.08 354.63 620.02 354.63 620.79 368 596.26 372.15 600.4 384 589.08 384 562.87 325.4 558.08 325 558.08 318 541.08 319 531.89 309 527.08 314.67 511.08 309"/>
                 <polygon id="area_18" class="map" points="522.55 641.17 522.55 703.29 536.61 698.93 557.59 672.21 573.74 672.21 573.74 656.62 571.17 653.64 571.17 641.17 522.55 641.17"/>
-                <circle id="graph_point_17" class="map_point" cx="156" cy="115.77" r="7.77"/>
-                <circle id="graph_point_21" class="map_point" cx="66.36" cy="238.77" r="7.77"/>
-                <circle id="graph_point_19" class="map_point" cx="291.85" cy="137.05" r="7.77"/>
-                <circle id="graph_point_16" class="map_point" cx="422.85" cy="137.05" r="7.77"/>
-                <circle id="graph_point_15" class="map_point" cx="404.08" cy="287.5" r="7.77"/>
-                <circle id="graph_point_9" class="map_point" cx="323.08" cy="302.35" r="7.77"/>
-                <circle id="graph_point_10"  class="map_point" cx="206.78" cy="279.73" r="7.77"/>
-                <circle id="graph_point_8" class="map_point" cx="218.3" cy="474.99" r="7.77"/>
-                <circle id="graph_point_6" class="map_point" cx="460.08" cy="400.01" r="7.77"/>
-                <circle id="graph_point_11" class="map_point" cx="581.3" cy="407.79" r="7.77"/>
-                <circle id="graph_point_7" class="map_point" cx="463.85" cy="490.53" r="7.77"/>
-                <circle id="graph_point_20" class="map_point" cx="527.08" cy="474.99" r="7.77"/>
-                <circle id="graph_point_2" class="map_point" cx="573.74" cy="477.94" r="7.77"/>
-                <circle id="graph_point_1" class="map_point" cx="613.89" cy="508.76" r="7.77"/>
-                <circle id="graph_point_4" class="map_point" cx="674.8" cy="470.17" r="7.77"/>
-                <circle id="graph_point_3" class="map_point" cx="489.76" cy="542" r="7.77"/>
-                <circle id="graph_point_14" class="map_point" cx="330.85" cy="648.94" r="7.77"/>
-                <circle id="graph_point_12" class="map_point" cx="512.34" cy="618.51" r="7.77"/>
-                <circle id="graph_point_18" class="map_point" cx="558.08" cy="689.36" r="7.77"/>
-                <circle id="graph_point_5" class="map_point" cx="544.85" cy="973.84" r="7.77"/>
-                <circle id="graph_point_13" class="map_point" cx="581.52" cy="584.38" r="7.77"/>
+                <circle id="graph_point_17" class="map_point" onclick="draw_tree_map_area(17)" cx="156" cy="115.77" r="7.77"/>
+                <circle id="graph_point_21" class="map_point" onclick="draw_tree_map_area(21)" cx="66.36" cy="238.77" r="7.77"/>
+                <circle id="graph_point_19" class="map_point" onclick="draw_tree_map_area(19)" cx="291.85" cy="137.05" r="7.77"/>
+                <circle id="graph_point_16" class="map_point" onclick="draw_tree_map_area(16)" cx="422.85" cy="137.05" r="7.77"/>
+                <circle id="graph_point_15" class="map_point" onclick="draw_tree_map_area(15)"  cx="404.08" cy="287.5" r="7.77"/>
+                <circle id="graph_point_9" class="map_point"  onclick="draw_tree_map_area(9)" cx="323.08" cy="302.35" r="7.77"/>
+                <circle id="graph_point_10"  class="map_point" onclick="draw_tree_map_area(10)" cx="206.78" cy="279.73" r="7.77"/>
+                <circle id="graph_point_8" class="map_point" onclick="draw_tree_map_area(8)" cx="218.3" cy="474.99" r="7.77"/>
+                <circle id="graph_point_6" class="map_point" onclick="draw_tree_map_area(6)" cx="460.08" cy="400.01" r="7.77"/>
+                <circle id="graph_point_11" class="map_point" onclick="draw_tree_map_area(11)" cx="581.3" cy="407.79" r="7.77"/>
+                <circle id="graph_point_7" class="map_point" onclick="draw_tree_map_area(7)" cx="463.85" cy="490.53" r="7.77"/>
+                <circle id="graph_point_20" class="map_point" onclick="draw_tree_map_area(20)" cx="527.08" cy="474.99" r="7.77"/>
+                <circle id="graph_point_2" class="map_point" onclick="draw_tree_map_area(2)" cx="573.74" cy="477.94" r="7.77"/>
+                <circle id="graph_point_1" class="map_point" onclick="draw_tree_map_area(1)" cx="613.89" cy="508.76" r="7.77"/>
+                <circle id="graph_point_4" class="map_point" onclick="draw_tree_map_area(4)" cx="674.8" cy="470.17" r="7.77"/>
+                <circle id="graph_point_3" class="map_point" onclick="draw_tree_map_area(3)" cx="489.76" cy="542" r="7.77"/>
+                <circle id="graph_point_14" class="map_point" onclick="draw_tree_map_area(14)" cx="330.85" cy="648.94" r="7.77"/>
+                <circle id="graph_point_12" class="map_point" onclick="draw_tree_map_area(12)" cx="512.34" cy="618.51" r="7.77"/>
+                <circle id="graph_point_18" class="map_point" onclick="draw_tree_map_area(18)" cx="558.08" cy="689.36" r="7.77"/>
+                <circle id="graph_point_5" class="map_point" onclick="draw_tree_map_area(5)" cx="544.85" cy="973.84" r="7.77"/>
+                <circle id="graph_point_13" class="map_point" onclick="draw_tree_map_area(13)" cx="581.52" cy="584.38" r="7.77"/>
 
                 <text class="text"><tspan x="43.49" y="962.19">Explore</tspan></text>
                 <text class="text" transform="translate(36.27 824.92)" onclick="update_crimes()"><tspan x="0" y="0">View LA crime stats</tspan></text>

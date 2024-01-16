@@ -13,7 +13,7 @@ class Slide{
      *  Display the html
      */
     upload(){
-        return_board().innerHTML += this.html;
+        return_board().innerHTML = this.html;
         this.update_style();
     }
     update_style(){
@@ -125,11 +125,9 @@ class Graph{
      * 
      * @returns string with svg to draw a rect for waffle 
      */
-    rect_svg(x, y, size, css_class, r=0){
-        return '<rect class="' + css_class + '" x="' + x + '" y="' + y +'" width="' + size +'" height="' + size +'" rx="1" ry="1" />'
+    rect_svg(x, y, width, height, css_class, r=0){
+        return '<rect class="' + css_class + '" x="' + x + '" y="' + y +'" width="' + width +'" height="' + height +'" rx="'+r+'" ry="'+r+'" />'
     }
-
-
 }
 
 /***
@@ -183,7 +181,7 @@ class WaffleChart extends Graph{
         for(let i=0; i < this.get_squares(); i++){
             html += this.rect_svg(
                 this.get_rect_x(i,size), this.get_rect_y(i, size),
-                size, this.get_rect_class(), this.r
+                size, size, this.get_rect_class(), this.r
                 )
         }
         return html;
@@ -300,6 +298,13 @@ class TreeMapNode{
         this.value = value;
     }
 
+    increase(){
+        this.value++;
+        if(this.supernode){
+            this.supernode.increase();
+        }
+    }
+
     set_x(x){
         this.x = x;
     }
@@ -318,18 +323,6 @@ class TreeMapNode{
 
     set_supernode(supernode){
         this.supernode = supernode;
-
-        this.update_supernode_value();
-    }
-
-    update_supernode_value(){
-        let supernode = this.supernode;
-        while(supernode){
-            supernode.set_value(
-                supernode.get_value() + this.value
-                )
-            supernode = supernode.supernode;
-        }
     }
 }
 
@@ -467,6 +460,71 @@ class TreeMap extends Graph{
         this.supernodes.push(node);
     }
 
+    get_html(){
+        return this.get_svg_start_tag() + this.rects_html() + this.get_svg_end_tag();
+    }
+
+    rects_html(){
+        this.supernodes.update_nodes_parameters();
+        let html = '';
+        let supernodes = this.supernodes.list;
+        let value = this.supernodes.value;
+
+        let id = 'crime_type_' + supernodes[0].code;
+        let width = supernodes[0].value / value * 800;
+        let height = 600
+
+        let x = 20;
+        let y = 20;
+        html += '<rect id="'+id+'"  class="tree_map_1" x="'+x+'" y="'+y+'" width ="'+width+'" height="'+height+'" />'
+
+        let text = crime_types[supernodes[0].code] +': ' + supernodes[0].value;
+
+        html += '<text x="30" y="45" class="text_inbox" onclick="main_page()">'+text+'</text>';
+
+
+        id = 'crime_type_' + supernodes[1].code;
+
+        x = width + 25;
+
+        width = (supernodes[1].value + supernodes[2].value) / value * 800;
+        height = (supernodes[1].value / (supernodes[1].value + supernodes[2].value)) * 600;
+
+        html += '<rect id="'+id+'"  class="tree_map_2" x="'+x+'" y="'+y+'" width ="'+width+'" height="'+height+'" />'
+
+        text = crime_types[supernodes[1].code] +': ' + supernodes[0].value;
+
+        let x_text = x + 10;
+
+        html += '<text x="'+ x_text +'" y="45" class="text_inbox" onclick="main_page()">'+text+'</text>';
+
+        id = 'crime_type_' + supernodes[2].code;
+
+        y = height + 25;
+        height = 600 - 5 - height;
+
+        html += '<rect id="'+id+'"  class="tree_map_3" x="'+x+'" y="'+y+'" width ="'+width+'" height="'+height+'" />'
+
+        text = crime_types[supernodes[2].code] +': ' + supernodes[0].value;
+
+        let y_text = y + 20;
+
+        html += '<text x="'+ x_text +'" y="'+y_text+'" class="text_inbox" onclick="main_page()">'+text+'</text>';
+
+        id = 'crime_type_others';
+
+        x += width + 5;
+        y = 20;
+        
+        width = (supernodes[3].value + supernodes[4].value + supernodes[5].value + supernodes[6].value) / value * 800;
+        height = 600;
+
+        html += '<rect id="'+id+'"  class="tree_map_4" x="'+x+'" y="'+y+'" width ="'+width+'" height="'+height+'" />';
+
+        html += '<text x="43.49" y="700" class="text" onclick="main_page()">Back</text>';
+        return html;
+    }
+
     
 }
 
@@ -540,6 +598,8 @@ class IconGraph extends Graph{
     }
 
     get_html(viewboox_width = 800, viewboox_height=800){
+
+
         return this.get_svg_start_tag() + this.get_html_icons() + this.get_svg_end_tag();
     }
 
@@ -650,7 +710,6 @@ class DotMap extends Graph{
         this.map = map;
         this.tags = tags;
         this.codes = codes;
-        console.log(values);
         this.values = values;
     }
 
@@ -674,10 +733,6 @@ class DotMap extends Graph{
         for(let i = 0; i < this.values.length; i++){
             let radius = this.values[i] * 40 / max;
             let id = 'graph_point_' + this.codes[i];
-
-            console.log(radius, id);
-
-            console.log(document.getElementById(id))
 
             document.getElementById(id).setAttribute('r', radius);
         }
@@ -718,7 +773,7 @@ function sort_parallel_lists(list1, list2){
  */
 function return_board(){
     if(document.getElementById('board')){
-        return document.getElementById('slide_board');
+        return document.getElementById('board');
     }else{
         let board = document.createElement('div');
         board.id = 'board';
