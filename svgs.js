@@ -45,7 +45,7 @@ const la_map_svg = `
 
                 <rect x="30" y="920" width="320" height="70" class="tree_map_1" onclick="view_victims()" />
                 <text class="text_inbox_big" onclick="view_victims()"><tspan x="43.49" y="962.19">Victims stats</tspan></text>
-                <rect x="30" y="810" width="460" height="70" class="tree_map_1" onclick="view_victims()" />
+                <rect x="30" y="810" width="460" height="70" class="tree_map_1" onclick="update_crimes()" />
                 <text class="text_inbox_big" transform="translate(36.27 850.92)" onclick="update_crimes()"><tspan x="0" y="0">LA area's crime rate</tspan></text>
                 
                 <text class="small_text" x="0" y="1050">Data from  <a href="https://data.lacity.org/Public- Safety/Crime-Data-from-2020-to-Present/2nrs-mtv8">LA Police department</a>.</text>
